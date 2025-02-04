@@ -11,11 +11,15 @@ def create_user(**data):
     if "username" not in data or "password" not in data:
         raise ValueError("username and password are requires.")
 
+    db_user = mongo.db.users.find_one({"username": data["username"]})
+    if db_user:
+        raise ValueError("User already exists")
+        
+    
     data["password"] = generate_password_hash(
         data.pop("password"), method="pbkdf2:sha256"
     )
 
-    # TODO: verificar se o usuário já existe
     mongo.db.users.insert_one(data)
 
     return data

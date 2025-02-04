@@ -42,18 +42,19 @@ def get(slug):
 @click.argument("slug")
 @click.option("--content", default=None, type=str)
 @click.option("--published", default=None, type=str)
-def update(slug, content, published):
+@click.option("--title", default=None, type=str)
+def update(slug, content, published, title):
     """Update post by slug"""
     data = {}
     if content is not None:
         data["content"] = content
     if published is not None:
         data["published"] = published.lower() == "true"
+    if title is not None:
+        data["title"] = title
     update_post_by_slug(slug, data)
     click.echo("Post update")
 
-
-# TODO: Criar comando para deletar ou despublicar posts
 
 def configure(app):
     app.cli.add_command(post)

@@ -1,18 +1,26 @@
 {% extends "base.html.j2" %}
 {% block content %}
 <div class="container">
-<h1>New Post</h1>
+    <h1 style="color: aliceblue;">New Post</h1>
 
-<div class="jumbotron">
+    <div class="jumbotron">
 
-<form action="/new" method="post">
-    <label for="title">Title:</label><br>
-    <input type="text" name="title" /><br>
-    <label for="content">Content:</label><br>
-    <textarea name="content" cols="30" rows="5"></textarea><br>
-    <input type="submit" value="Enviar">
-</form>
+        {% if error_message %}
+        <div style="color: red; font-weight: bold; margin-bottom: 10px;">
+            {{ error_message }}
+        </div>
+        {% endif %}
 
-</div>
+        <form action="/new" method="post">
+            <label for="title">Title:</label><br>
+            <input type="text" name="title" value="{{ title or '' }}" /><br>
+
+            <label for="content">Content:</label><br>
+            <textarea name="content" cols="30" rows="5">{{ content or '' }}</textarea><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+
+    </div>
 </div>
 {% endblock %}

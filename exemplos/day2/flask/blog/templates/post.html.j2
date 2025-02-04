@@ -1,13 +1,35 @@
 {% extends "base.html.j2" %}
 {% block content %}
 <div class="container">
-<h1>{{ post.title }}</h1>
+    <h1 style="color: aliceblue;">{{ post.title }}</h1>
 
-<div class="jumbotron">
-<small>{{ post.date | format_date }}</small>
-<p>
-    {{ markdown(post.content) }}
-</p>
-</div>
+    <div class="jumbotron">
+        <small
+            style="display:inline-block; padding: 4px 6px 2px; border-radius: 6px ;font-size: medium; color: #0969da;background-color: #cceaf8;">
+            {{ post.username }}
+        </small>
+        <small>{{ post.date | format_date }}</small>
+
+        <p>{{ markdown(post.content) }}</p>
+
+        {% if get_username() and get_username() == post.username %}
+        <div style="margin-top: 15px;">
+            <a href="{{ url_for('post.edit', slug=post.slug) }}"
+                style="padding: 5px 10px; background-color: #f0ad4e; color: white; text-decoration: none; border-radius: 5px;">
+                ✏️ Editar
+            </a>
+
+            <form action="{{ url_for('post.delete', slug=post.slug) }}" method="post" style="display: inline;">
+                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este post?');"
+                    style="padding: 5px 10px; background-color: #d9534f; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    🗑️ Excluir
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        <br>
+        <a href="/">Voltar</a>
+    </div>
 </div>
 {% endblock %}

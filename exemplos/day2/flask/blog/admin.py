@@ -5,6 +5,7 @@ from flask_admin.contrib.pymongo import ModelView
 from flask_simplelogin import login_required
 from wtforms import form, fields, validators
 from blog.database import mongo
+from blog.utils import slugify
 
 
 # decorate Flask-Admin view via Monkey Patching
@@ -24,9 +25,14 @@ class AdminPosts(ModelView):
     form = PostsForm
 
     def on_model_change(self, form, post, is_created):
-        post["slug"] = post["title"].replace("_", "-").replace(" ", "-").lower()
-        # TODO Criar função no slugify (remover acentos)
-        # TODO Verificar se o post com o mesmo slug já existe
+        
+        post["slug"] = slugify(post["title"])
+        
+        exist_post = mongo.db.posts.find_one({"slug": post["slug"]})
+        
+        if "date" not in post and exist_post:
+            raise ValueError("Já existe um post com esse título")
+        
         if is_created:
             post["date"] = datetime.now()
 

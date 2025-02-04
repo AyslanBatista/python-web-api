@@ -7,5 +7,5 @@ def configure(app: Flask):
 
     # {{date | format_date}}
     app.add_template_filter(
-        lambda date: date.strftime("%d/%m/%Y"), "format_date"
+        lambda date: date.strftime("%d/%m/%Y às %H:%M:%S"), "format_date"
     )

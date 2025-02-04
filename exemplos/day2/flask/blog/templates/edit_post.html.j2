@@ -1,0 +1,21 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<div class="container">
+    <h1 style="color: aliceblue;">Editar Post</h1>
+    
+    <div class="jumbotron">
+        <form action="{{ url_for('post.edit', slug=post.slug) }}" method="post">
+            <label for="title">Título:</label><br>
+            <input type="text" name="title" value="{{ post.title }}" required /><br>
+
+            <label for="content">Conteúdo:</label><br>
+            <textarea name="content" cols="30" rows="5" required>{{ post.content }}</textarea><br>
+
+            <input type="submit" value="Salvar Alterações">
+        </form>
+
+        <br>
+        <a href="{{ url_for('post.detail', slug=post.slug) }}">Cancelar</a>
+    </div>
+</div>
+{% endblock %}
