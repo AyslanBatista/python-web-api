@@ -1,0 +1,89 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}{{ config.get('TITLE') }}{% endblock %}
+
+{% block navbar %}
+<style>
+    body {
+        background-color: #121212;
+        color: #0c0b0b;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #1e1e1e;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .logo img {
+        height: 50px;
+        width: 50px;
+        border-radius: 20%;
+    }
+
+    .home-button {
+        background-color: #333;
+        color: #e0e0e0;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 1px solid #444;
+        transition: background 0.3s;
+    }
+
+    .home-button:hover {
+        background-color: #555;
+    }
+
+    .navbar-right {
+        display: flex;
+        gap: 10px;
+    }
+
+    .navbar-right a, .navbar-right form button {
+        text-decoration: none;
+        color: #e0e0e0;
+        background-color: #333;
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: 1px solid #444;
+        transition: background 0.3s;
+        cursor: pointer;
+    }
+
+    .navbar-right a:hover, .navbar-right form button:hover {
+        background-color: #555;
+    }
+
+</style>
+
+<div class="navbar">
+    <div class="navbar-left">
+        <a class="logo" href="/">
+            <img src="https://s3.getstickerpack.com/storage/uploads/sticker-pack/cat-memes/sticker_3.png?29beb201c348601d35c4870e5a58115c&d100x100" alt="Logo">
+        </a>
+        <a class="home-button" href="/">HOME</a>
+    </div>
+    
+    <div class="navbar-right">
+        {% if get_username() %}
+            <span style="margin-top: 10px; color:rgb(94, 186, 247);">Bem-vindo, {{ get_username() }}</span>
+            <form action="{{ url_for('simplelogin.logout') }}" method="GET" style="display:inline;">
+                <button type="submit" class="logout-button">Sair</button>
+            </form>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Cadastrar</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
